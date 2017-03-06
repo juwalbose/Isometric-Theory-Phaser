@@ -164,15 +164,15 @@ function renderScene(){
     normText.text='Hero is on x,y: '+heroMapTile.x +','+heroMapTile.y;
 }
 function drawHeroIso(){
-    var isoPt= new Phaser.Point();
+    var isoPt= new Phaser.Point();//It is not advisable to create points in update loop
     var heroCornerPt=new Phaser.Point(heroMapPos.x-heroMapSprite.width/2,heroMapPos.y-heroMapSprite.height/2);
     isoPt=cartesianToIsometric(heroCornerPt);//find new isometric position for hero from 2D map position
     gameScene.renderXY(sorcererShadow,isoPt.x+borderOffset.x+shadowOffset.x, isoPt.y+borderOffset.y+shadowOffset.y, false);//draw shadow to render texture
     gameScene.renderXY(sorcerer,isoPt.x+borderOffset.x+heroWidth, isoPt.y+borderOffset.y-heroHeight, false);//draw hero to render texture
 }
 function drawTileIso(tileType,i,j){//place isometric level tiles
-    var isoPt= new Phaser.Point();
-    var cartPt=new Phaser.Point();
+    var isoPt= new Phaser.Point();//It is not advisable to create point in update loop
+    var cartPt=new Phaser.Point();//This is here for better code readability.
     cartPt.x=j*tileWidth;
     cartPt.y=i*tileWidth;
     isoPt=cartesianToIsometric(cartPt);
@@ -182,7 +182,7 @@ function drawTileIso(tileType,i,j){//place isometric level tiles
         gameScene.renderXY(floorSprite, isoPt.x+borderOffset.x, isoPt.y+borderOffset.y, false);
     }
 }
-function isWalkable(){
+function isWalkable(){//It is not advisable to create points in update loop, but for code readability.
     var able=true;
     var heroCornerPt=new Phaser.Point(heroMapPos.x-heroMapSprite.width/2,heroMapPos.y-heroMapSprite.height/2);
     var cornerTL =new Phaser.Point();
@@ -329,13 +329,13 @@ function cartesianToIsometric(cartPt){
     var tempPt=new Phaser.Point();
     tempPt.x=cartPt.x-cartPt.y;
     tempPt.y=(cartPt.x+cartPt.y)/2;
-    return tempPt;
+    return (tempPt);
 }
 function isometricToCartesian(isoPt){
     var tempPt=new Phaser.Point();
     tempPt.x=(2*isoPt.y+isoPt.x)/2;
     tempPt.y=(2*isoPt.y-isoPt.x)/2;
-    return tempPt;
+    return (tempPt);
 }
 function getTileCoordinates(cartPt, tileHeight){
     var tempPt=new Phaser.Point();
